@@ -11,27 +11,27 @@ import time, random, multiprocessing, sys, json, codecs, threading, glob, re, st
 from gtts import gTTS
 from googletrans import Translator
 
-cl = LINE("EwDRNHw851eN1JdbeiJ9.4BqTuu4avcR6I2R9MNFHcq.P4I7azQI/cEK+261uU3VfKkxCQPD7xnZFxDh0HysOYM=")
+cl = LINE("Ew2ETztsx7WzVIJlKH8b.SCwNhYE4y4LUNus/QfFtwW.NR7PBtOdBQU04Bs1xUXzNMZnwse4+VPfJujAp8XRGmg=")
 cl.log("Auth Token : " + str(cl.authToken))
 cl.log("Timeline Token : " + str(cl.tl.channelAccessToken))
 
-ka = LINE("EwH6Z0yx9Ic5sFONu2f9.s7cM8Jx363NA3Dmcp5FKUq.wn26gLGJDfGxicRELQF7L4KVimyul3hbsprSoFurqqw=")
+ka = LINE("EwEpuJQJ95pPnUScTg9f.RcO+gtSFS9mgSS+yYZoNVW.KfnRovRtme9Ta1B0qkRaXmbw/Bcp4ZGPsEqzNA5v+FE=")
 ka.log("Auth Token : " + str(ka.authToken))
 ka.log("Timeline Token : " + str(ka.tl.channelAccessToken))
 
-kb = LINE("EwUpTeUyis13bFcCVGt0.27GIX+Sur2YqRPJL3MI0ea.jAHELRAfn7VaZH9m8PSbhJhq05hzIaFrSffXOGTsgo4=")
+kb = LINE("EwRlewb32NybnFepLjWa.y5VxpNSHKkly4g+m7/UdgG.8q92Eqe4ibJ1/y8/8tyNS74sh+EC0CPvKXS8e0Gq6ds=")
 kb.log("Auth Token : " + str(kb.authToken))
 kb.log("Timeline Token : " + str(kb.tl.channelAccessToken))
 
-kc = LINE("EwX5cOHGXz08UAWHSZ15.NNL4MT9gVgXy+YUy6YZJDq.0D/l82vWfgnsd0hPJ1j11oTFlCtDPRXHB9XBBxPe6Gc=")
+kc = LINE("EwCFYw4CMvqLWIfzIUF1.tymKwInKTygiyMM1IX4vuq.odVHZma6i7V9Ic3XWO5DlJ41x0Bpa2PhY8M7D+DD/vo=")
 kc.log("Auth Token : " + str(kc.authToken))
 kc.log("Timeline Token : " + str(kc.tl.channelAccessToken))
 
 oepoll = OEPoll(cl)
 call = cl
-creator = ["u95e01deb062ca450523d194b744585f8"]
-owner = ["u95e01deb062ca450523d194b744585f8"]
-admin = ["u95e01deb062ca450523d194b744585f8"]
+creator = ["ub1c5a71f27b863896e9d44bea857d35b"]
+owner = ["ub1c5a71f27b863896e9d44bea857d35b"]
+admin = ["ub1c5a71f27b863896e9d44bea857d35b"]
 staff = []
 mid = cl.getProfile().mid
 Amid = ka.getProfile().mid
