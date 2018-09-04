@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from LINEPY import *
-from akad.ttypes import *
-from multiprocessing import Pool, Process
-from datetime import datetime
+from LineAPI.linepy import *
+from LineAPI.akad.ttypes import Message
+from LineAPI.akad.ttypes import ContentType as Type
+from LineAPI.akad.ttypes import ChatRoomAnnouncementContents
+from LineAPI.akad.ttypes import ChatRoomAnnouncement
+from datetime import datetime, timedelta
 from time import sleep
 from bs4 import BeautifulSoup
 from humanfriendly import format_timespan, format_size, format_number, format_length
-import time, random, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib.request, urllib.parse, urllib.error, urllib.parse
+import time, random, multiprocessing, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib, urllib3, urllib.parse, ffmpy, html5lib, wikipedia, atexit, timeit, pafy, youtube_dl, traceback
 from gtts import gTTS
-import html5lib,shutil
-import wikipedia,goslate
-from multiprocessing import Pool, Process
 from googletrans import Translator
 
 #===============================================================================================
