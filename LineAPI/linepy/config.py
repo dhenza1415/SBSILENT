@@ -28,11 +28,11 @@ class Config(object):
         'LINE_SERVICES': '1459630796'
     }
 
-    APP_TYPE    = 'DESKTOPWIN\t5.5.0.1585\tWINDOWSt5.2.1.3600-XP-x64'   #ApplicationType._VALUES_TO_NAMES[368]
-    APP_VER     = '8.2.2'
+    APP_TYPE    = ApplicationType._VALUES_TO_NAMES[368]
+    APP_VER     = '1.4.17'
     CARRIER     = '51089, 1-0'
-    SYSTEM_NAME = 'Anti Penghianat'
-    SYSTEM_VER  = '5.5.0.1585'
+    SYSTEM_NAME = 'SILENTKILLER'
+    SYSTEM_VER  = '11.2.5'
     IP_ADDR     = '8.8.8.8'
     EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
