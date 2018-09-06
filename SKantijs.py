@@ -122,6 +122,8 @@ wait = {
     "welcomeOn":False,
     "sticker":False,
     "selfbot":True,
+    "Protectantijs":False,
+    "Ghost":False,
     "mention":"Cuy ngintip mele gbung sini dihh",
     "Respontag":"Tag 1x besok bunting",
     "welcome":"Welcome semoga bahagia",
@@ -757,6 +759,67 @@ def bot(op):
                     random.choice(ABC).kickoutFromGroup(op.param1,[op.param2])
                 else:
                     pass
+        if op.type == 19:
+            try:
+                if op.param1 in ghost:
+                    if op.param2 not in Bots and op.param2 not in owner and op.param2 not in admin and op.param2 not in staff:
+                        G = cl.getGroup(op.param1)
+                        G.preventedJoinByTicket = False
+                        cl.updateGroup(G)
+                        invsend = 0
+                        Ticket = cl.reissueGroupTicket(op.param1)
+                        sw.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        sw.kickoutFromGroup(op.param1,[op.param2])
+                        sw.leaveGroup(op.param1)
+                        X = cl.getGroup(op.param1)
+                        X.preventedJoinByTicket = True
+                        cl.updateGroup(X)
+            except:
+                pass
+
+        if op.type == 19:
+            try:
+                if op.param1 in protectantijs:
+                  if op.param3 in mid:
+                    if op.param2 not in Bots and op.param2 not in owner and op.param2 not in admin and op.param2 not in staff:
+                        sw.acceptGroupInvitation(op.param1)
+                        G = sw.getGroup(op.param1)
+                        G.preventedJoinByTicket = False
+                        sw.updateGroup(G)
+                        Ticket = sw.reissueGroupTicket(op.param1)
+                        cl.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        sw.kickoutFromGroup(op.param1,[op.param2])
+                        G.preventedJoinByTicket = True
+                        sw.updateGroup(G)
+                        wait["blacklist"][op.param2] = True
+                        sw.leaveGroup(op.param1)
+                        cl.inviteIntoGroup(op.param1,[Zmid])
+                        cl.inviteIntoGroup(op.param1,[admin])
+                    else:
+                        pass
+                if op.param3 in Zmid:
+                    if op.param2 not in Bots and op.param2 not in owner and op.param2 not in admin and op.param2 not in staff:
+                        cl.kickoutFromGroup(op.param1,[op.param2])
+                        cl.findAndAddContactsByMid(op.param3)
+                        cl.inviteIntoGroup(op.param1,[Zmid])
+                        cl.sendMessage(op.param1,"☠Invited antiJS Succses☠")
+                    else:
+                        cl.kickoutFromGroup(op.param1,[op.param2])
+                        cl.findAndAddContactsByMid(op.param3)
+                        cl.inviteIntoGroup(op.param1,[Zmid])
+                        cl.sendMessage(op.param1,"☠Invited AntiJS Succes☠")
+                if op.param2 not in Bots and op.param2 not in owner and op.param2 not in admin and op.param2 not in staff:
+                    if op.param3 in admin:
+                        if op.param1 in protectantijs:
+                            wait["blacklist"][op.param2] = True
+                            cl.kickoutFromGroup(op.param1,[op.param2])
+                            cl.findAndAddContactsByMid(op.param3)
+                            cl.inviteIntoGroup(op.param1,[op.param3])
+                            cl.sendMessage(op.param1,"☠Invited AntiJS succes☠")
+                else:
+                    pass
+            except:
+                pass
 
         if op.type == 32:
             if op.param1 in protectcancel:
@@ -1101,7 +1164,6 @@ def bot(op):
                                 pass
 
                 return
-
         if op.type == 55:
             try:
                 if op.param1 in Setmain["SKreadPoint"]:
@@ -1421,6 +1483,10 @@ def bot(op):
                                 else: md+="│ Welcome「off」\n"
                                 if wait["autoLeave"] == True: md+="│ Autoleave「on」\n"
                                 else: md+="│ Autoleave「off」\n"
+                                if msg.to in protectantijs: md+="│ Protectantijs「on」\n"
+                                else: md+="│ Protectantijs「off」\n"
+                                if msg.to in ghost: md+="│ Ghost「on」\n"
+                                else: md+="│ Ghost「off」\n"
                                 if msg.to in protectqr: md+="│ Protecturl「on」\n"
                                 else: md+="│ Protecturl「off」\n"
                                 if msg.to in protectjoin: md+="│ Protectjoin「on」\n"
@@ -2720,7 +2786,7 @@ def bot(op):
                                     else:
                                          msgs = "Protect kick sudah tidak aktif"
                                     cl.sendMessage(msg.to, "「Dinonaktifkan」\n" + msgs)
-                                    
+
                         elif 'Protectinvite ' in msg.text:
                            if msg._from in admin:
                               spl = msg.text.replace('Protectinvite ','')
@@ -2739,7 +2805,7 @@ def bot(op):
                                          msgs = "Protect invite dinonaktifkan\nDi Group : " +str(ginfo.name)
                                     else:
                                          msgs = "Protect invite sudah tidak aktif"
-                                    cl.sendMessage(msg.to, "「Dinonaktifkan」\n" + msgs)           
+                                    cl.sendMessage(msg.to, "「Dinonaktifkan」\n" + msgs)
 
                         elif 'Protectjoin ' in msg.text:
                            if msg._from in admin:
@@ -2780,6 +2846,45 @@ def bot(op):
                                     else:
                                          msgs = "Protect cancel sudah tidak aktif"
                                     cl.sendMessage(msg.to, "「Dinonaktifkan」\n" + msgs)
+                        elif 'Protectantijs ' in msg.text:
+                          if msg._from in admin:
+                             spl = msg.text.replace('Protectantijs ','')
+                             if spl == 'on':
+                                 if msg.to in protectantijs:
+                                      msgs = "Protect antiJS sudah aktif"
+                                 else:
+                                        protectantijs.append(msg.to)
+                                        ginfo = cl.getGroup(msg.to)
+                                        msgs = "Protect antiJS diaktifkan\nDi Group : " +str(ginfo.name)
+                                 cl.sendMessage(msg.to, "ãDiaktifkanã\n" + msgs)
+                             elif spl == 'off':
+                                   if msg.to in protectantijs:
+                                        protectantijs.remove(msg.to)
+                                        ginfo = cl.getGroup(msg.to)
+                                        msgs = "Protect antiJS dinonaktifkan\nDi Group : " +str(ginfo.name)
+                                   else:
+                                        msgs = "Protect antiJS sudah tidak aktif"
+                                   cl.sendMessage(msg.to, "ãDinonaktifkanã\n" + msgs)
+
+                        elif 'Ghost ' in msg.text:
+                          if msg._from in admin:
+                             spl = msg.text.replace('Ghost ','')
+                             if spl == 'on':
+                                 if msg.to in ghost:
+                                      msgs = "Ghost sudah aktif"
+                                 else:
+                                        ghost.append(msg.to)
+                                        ginfo = cl.getGroup(msg.to)
+                                        msgs = "Ghost Diaktifkan\nDi Group : " +str(ginfo.name)
+                                 cl.sendMessage(msg.to, "ãDiaktifkanã\n" + msgs)
+                             elif spl == 'off':
+                                   if msg.to in ghost:
+                                        ghost.remove(msg.to)
+                                        ginfo = cl.getGroup(msg.to)
+                                        msgs = "Ghost Dinonaktifkan\nDi Group : " +str(ginfo.name)
+                                   else:
+                                        msgs = "Ghost Sudah Tidak Aktif"
+                                   cl.sendMessage(msg.to, "ãDinonaktifkanã\n" + msgs)
 
                         elif 'Semua pro ' in msg.text:
                            if msg._from in admin:
