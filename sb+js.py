@@ -14,20 +14,20 @@ import time, random, multiprocessing, sys, json, codecs, threading, glob, re, st
 from gtts import gTTS
 from googletrans import Translator
 
-cl = LINE()
+cl = LINE("ExRl4m4WGW1xbj12hT5b.SCwNhYE4y4LUNus/QfFtwW.rA4h9CTREToJsfdbeEAbirT88JGabSjAnatJAAkZNZc=")
 cl.log("Auth Token : " + str(cl.authToken))
 cl.log("Timeline Token : " + str(cl.tl.channelAccessToken))
 
-ka = LINE()
+ka = LINE("ExPx0AUHSaIP2fEcWHq4.XuQrezi1qIyJlRlvV0wxra.bTo9fBsgruAKuVdFvIp+TuYTat0xZ/oRioYHz+hqmzA=")
 ka.log("Auth Token : " + str(ka.authToken))
 ka.log("Timeline Token : " + str(ka.tl.channelAccessToken))
 
 oepoll = OEPoll(cl)
 call = cl
-creator = []
-owner = []
-admin = []
-staff = []
+creator = ["ub1c5a71f27b863896e9d44bea857d35b"]
+owner = ["ub1c5a71f27b863896e9d44bea857d35b"]
+admin = ["ub1c5a71f27b863896e9d44bea857d35b"]
+staff = ["ub1c5a71f27b863896e9d44bea857d35b"]
 mid = cl.getProfile().mid
 Amid = ka.getProfile().mid
 Bots = [Amid,mid]
