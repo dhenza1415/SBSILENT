@@ -11,19 +11,19 @@ import time, random, multiprocessing, sys, json, codecs, threading, glob, re, st
 from gtts import gTTS
 from googletrans import Translator
 
-cl = LINE("Ew2ETztsx7WzVIJlKH8b.SCwNhYE4y4LUNus/QfFtwW.NR7PBtOdBQU04Bs1xUXzNMZnwse4+VPfJujAp8XRGmg=")
+cl = LINE("Ex7NEis2TnQtcLVIaHW2.UgaA6PtgDwrhl20KYKxh8G.mGi7XUyQMRCMK9BfFYNh0lJVfYhGc9Cb9C92R7DZQus=")
 cl.log("Auth Token : " + str(cl.authToken))
 cl.log("Timeline Token : " + str(cl.tl.channelAccessToken))
 
-ka = LINE("EwEpuJQJ95pPnUScTg9f.RcO+gtSFS9mgSS+yYZoNVW.KfnRovRtme9Ta1B0qkRaXmbw/Bcp4ZGPsEqzNA5v+FE=")
+ka = LINE("ExdMfkX1h8mFLTJGMfpc.gYj8eX14kEAzvSbV9TTxla.f1qz/gI3MAxCFyLrbvaZIv/7vl7nUs9eo+qwYUWNYPU=")
 ka.log("Auth Token : " + str(ka.authToken))
 ka.log("Timeline Token : " + str(ka.tl.channelAccessToken))
 
-kb = LINE("EwRlewb32NybnFepLjWa.y5VxpNSHKkly4g+m7/UdgG.8q92Eqe4ibJ1/y8/8tyNS74sh+EC0CPvKXS8e0Gq6ds=")
+kb = LINE("ExE9NBMp2yE6cJF0CVad.jB/U5D2EIoY5xGkQ7FOTtq.GMP2BpGvHDOXZHQGYl8zf817rv2VjgAgkB8qkjYqBH8=")
 kb.log("Auth Token : " + str(kb.authToken))
 kb.log("Timeline Token : " + str(kb.tl.channelAccessToken))
 
-kc = LINE("EwCFYw4CMvqLWIfzIUF1.tymKwInKTygiyMM1IX4vuq.odVHZma6i7V9Ic3XWO5DlJ41x0Bpa2PhY8M7D+DD/vo=")
+kc = LINE("ExlXQ0JQAgVICn5KRBy7.BiGakU1CeeRwXmH42j19bW.rF1eUAIszT5mbUCRe/l0cJP/Cj5F5ooZ7giZHNLXWn4=")
 kc.log("Auth Token : " + str(kc.authToken))
 kc.log("Timeline Token : " + str(kc.tl.channelAccessToken))
 
