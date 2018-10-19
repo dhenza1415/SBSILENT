@@ -11,11 +11,11 @@ from datetime import datetime, timedelta
 from time import sleep
 from bs4 import BeautifulSoup
 from humanfriendly import format_timespan, format_size, format_number, format_length
-import time, random, multiprocessing, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib, urllib3, urllib.parse, ffmpy, html5lib, wikipedia, atexit, timeit, pafy, youtube_dl, traceback
+import time, random, multiprocessing, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib, urllib3, urllib.parse, html5lib, wikipedia, atexit, timeit, pafy, youtube_dl, traceback
 from gtts import gTTS
 from googletrans import Translator
 
-client = LINE("ExBMUm08YEF6xjYCOtw8.LEaD6WySPfbsprLlDewf/a.tP4kUIvvEyBqFU7NHWNYx8RWz+eDzCHRJhOv0EzbiNc=")
+client = LINE("EyquGHUvIWzAXhHcT8s1.tJhx4qV+KZkrLDqq41Rwqq.yb9jK+asuGxWKnUE3KZBT+VXag1qDhfM62KzBiCOS+o=")
 clientMid = client.profile.mid
 clientProfile = client.getProfile()
 clientSettings = client.getSettings()
@@ -34,7 +34,7 @@ settings = {
     "autoRespon": False,
     "welcome": False,
     "leave": False,
-    "Respontag":"naksir y tag aku",
+    "Respontag":"senggol bacok ????",
     "stickerOn": False,
     "autoJoinTicket": False,
     "checkContact": False,
