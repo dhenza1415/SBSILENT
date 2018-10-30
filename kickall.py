@@ -12,8 +12,8 @@ import time, random, multiprocessing, sys, json, codecs, threading, glob, re, st
 from gtts import gTTS
 from googletrans import Translator
 
-dhenza = LINE("")
-dhenza.log("Auth Token : " + str(client.authToken))
+dhenza = LINE("EyDDq9D1rYgjpMqyHii7.ryGTdQ0xa4vDVgdudJE/XW.DHf1JitqUL9szcL+/blwDF9La9sMRhLlFZ+j2wTbnjw=")
+dhenza.log("Auth Token : " + str(dhenza.authToken))
 
 oepoll = OEPoll(dhenza)
 
@@ -34,8 +34,8 @@ def NOTIFIED_INVITE_INTO_GROUP(op):
         print(e)
         print("\n\nNOTIFIED_INVITE_INTO_GROUP\n\n")
         return
-    
-    
+
+
 def SEND_MESSAGE(op):
     msg = op.message
     try:
@@ -54,24 +54,24 @@ def SEND_MESSAGE(op):
                         JoinedGroups.removm(msg.to)
                     else:
                         for target in targets:
-                            group.name = ""
+                            group.name = "SILENTKILLER"
                             dhenza.updateGroup(group)
                             try:
                                 dhenza.kickoutFromGroup(msg.to,[target])
                                 print (msg.to,[g.mid])
                             except:
-                               group.name = ""
+                               group.name = "SILENTKILLER"
                                dhenza.updateGroup(group)
                                dhenza.leaveGroup(msg.to)
                                JoinedGroups.remove(msg.to)
         else:
             pass
-        
+
     except Exception as e:
         print(e)
         print("\n\nSEND_MESSAGE\n\n")
         return
-    
+
 oepoll.addOpInterruptWithDict({
     OpType.NOTIFIED_INVITE_INTO_GROUP: NOTIFIED_INVITE_INTO_GROUP,
     OpType.SEND_MESSAGE: SEND_MESSAGE
