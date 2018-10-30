@@ -12,20 +12,20 @@ import time, random, multiprocessing, sys, json, codecs, threading, glob, re, st
 from gtts import gTTS
 from googletrans import Translator
 #===============================================================================================
-cl = LINE("")
+cl = LINE("EyunRbh5iBXFRF3M9Teb.SCwNhYE4y4LUNus/QfFtwW.AMBFtJT/Sh+IxtkarNzSB/jZn6/P15iCYUUUaOE8Kk0=")
 cl.log("Auth Token : " + str(cl.authToken))
-ki = LINE("")
+ki = LINE("EyF555kn6Rr8ODgQJI87.ryGTdQ0xa4vDVgdudJE/XW.QbwaTuZHx6ObHDvHwjNKBUu0pDsKe0s1DcHQSuZW/14=")
 ki.log("Auth Token : " + str(ki.authToken))
-kk = LINE("")
+kk = LINE("EyfyQNzcrxoPMHr0T5s9.k+n9YlUAYfbHu5wP4vHq/q.NOS2wc4xMKWLknBhQWnNaJf35BTzR1rGmgBxBqgd12A=")
 kk.log("Auth Token : " + str(kk.authToken))
-kc = LINE("")
+kc = LINE("EylzuydXkzQRy9rrSeKc.cL7O15BJz3PwUe+Wo2vK7a.GNRU8PZzRjx8XbOmXWsOr7yFcYkV0AR0x/gnfE4Qe9g=")
 kc.log("Auth Token : " + str(kc.authToken))
-kb = LINE("")
+kb = LINE("EyvSHA6sitTr7BgooQz7.kBfVdPNp3W59E4fW983bPW.4mkyVm4g+QfDX5O6dLFqhoczMeB6RHne1d3eVqiNprs=")
 kb.log("Auth Token : " + str(kb.authToken))
-sw = LINE("")
+sw = LINE("EyRVBTvpUYmzxxrkuyIe.362avKDVpNAqnxvrpmIUVG.uxbqgfzfztzEbnmPlqfiZ6KpN0dK4QfGRgA2l02KDKM=")
 sw.log("Auth Token : " + str(sw.authToken))
 
-print ("☆☆☆[ Login Success ]☆☆☆")
+print ("☆☆☆[ Creator Dhenz415 ]☆☆☆")
 
 oepoll = OEPoll(cl)
 call = cl
@@ -2474,7 +2474,7 @@ def bot(op):
                                 G = cl.getGroup(msg.to)
                                 sw.leaveGroup(msg.to)
 
-                        elif cmd == "masuk":
+                        elif cmd == "masuk pak eko":
                           if wait["selfbot"] == True:
                             if msg._from in admin:
                                 G = cl.getGroup(msg.to)
