@@ -72,7 +72,6 @@ settings = {
     "welcome": False,
     "leave": False,
     "mid": False,
-    "unsendMessage": False,
     "replySticker": False,
     "stickerOn": False,
     "checkContact": False,
@@ -122,6 +121,7 @@ settings = {
     "group":{},
     "groupPicture":False,
     "changePicture":False,
+    "changeProfileVideo": False,
     "autoJoinTicket":False,
     "userAgent": [
         "Mozilla/5.0 (X11; U; Linux i586; de; rv:5.0) Gecko/20100101 Firefox/5.0",
@@ -326,38 +326,12 @@ def delExpire():
                     except Exception as error:
                         logError(error)
                         
-def TERIMA_PESAN(op):
-    try:
-        msg = op.message
-
-        text = msg.text
-        receiver = msg.to
-        sender = msg._from
-        msg_id = msg.id
-        if msg.toType == 2:
-            var_dump(userTemp)
-            displayName = cl.getContact(sender).displayName
-            if text in prohibitedWords:
-            	if sender in userTemp:
-                    userTemp[sender] = userTemp.get(sender) + 1
-                    # Jika sudah melebihi dari 3, maka akan terkick
-                    if userTemp.get(sender) > 3:
-                        userKicked.append(sender)
-                        
-                        cl.kickoutFromGroup(receiver, userKicked)
-                        cl.log("{} telah terkick dari grup".format(displayName))
-                        userTemp.pop(sender)
-            else:
-                    userTemp[sender] = 1
-    except Exception as e:
-            cl.log(str(e)) 
-
 def changeVideoAndPictureProfile(pict, vids):
     try:
         files = {'file': open(vids, 'rb')}
         obs_params = cl.genOBSParams({'oid': mid, 'ver': '2.0', 'type': 'video', 'cat': 'vp.mp4'})
         data = {'params': obs_params}
-        r_vp = client.server.postContent('{}/talk/vp/upload.nhn'.format(str(client.server.LINE_OBS_DOMAIN)), data=data, files=files)
+        r_vp = cl.server.postContent('{}/talk/vp/upload.nhn'.format(str(cl.server.LINE_OBS_DOMAIN)), data=data, files=files)
         if r_vp.status_code != 201:
             return "Failed update profile"
         cl.updateProfilePicture(pict, 'vp')
@@ -375,7 +349,7 @@ def changeProfileVideo(to):
         files = {'file': open(path, 'rb')}
         obs_params = cl.genOBSParams({'oid': cl.getProfile().mid, 'ver': '2.0', 'type': 'video', 'cat': 'vp.mp4'})
         data = {'params': obs_params}
-        r_vp = client.server.postContent('{}/talk/vp/upload.nhn'.format(str(client.server.LINE_OBS_DOMAIN)), data=data, files=files)
+        r_vp = cl.server.postContent('{}/talk/vp/upload.nhn'.format(str(cl.server.LINE_OBS_DOMAIN)), data=data, files=files)
         if r_vp.status_code != 201:
             return cl.sendMessage(to, "Gagal update profile")
         path_p = settings['changeProfileVideo']['picture']
@@ -568,6 +542,9 @@ def help():
     key = Setmain["keyCommand"]
     key = key.title()
     helpMessage = "╔═════════════╗\n"
+    helpMessage += "║ 🗂🗂🗂🗂🗂🗂🗂🗂🗂 \n"
+    helpMessage += "╚═════════════╝\n" 
+    helpMessage += "╔═════════════╗\n"
     helpMessage += "║             S̶̭̗̞̙̿͑̽̆̃̒į̷̙̝̦̤̜̗́̉ͅl̸̛͓͋͋͆̍ę̶͇̮̦̣̖̙̘̪̉n̸͍̦͉̖̟͚̗̣̍̓̽̅̚ť̴̙͋ ̷̨̳̠͎̮̘͇̀̅̀͒̈́͊̕͝T̸̡̯̗̩̺͉̑́͛̌̒ͅé̶̡̱̯̮̯̊̏́̀̃͜a̴̭͓̫͚̐́̂̍̂̊̋̚m̸̨̨̹͎͍̳̥͆̓͗̿͐͗͑̿̓͠ ̴̠͐̂B̷̛̳͎̫̻̫̯̣͓̲͋̀͋̋͊̈͗͑o̵̲̾̈́͒͗t̴̢͍̫̰̠̞͖͍̬̑̊̽͒́̈́͗ͅ\n"
     helpMessage += "╠═════════════╝\n"
     helpMessage += "╠❂➣ ║%i. " % num + key + "Me\n"
@@ -628,13 +605,13 @@ def help():
     num = (num+1)
     helpMessage += "╠❂➣ ║%i. " % num + key + "Srepson: text\n"
     num = (num+1)
-    helpMessage += "╠❂➣ ║%i. " % num + key + "Ceksider/off\n"
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Csider/off\n"
     num = (num+1)
-    helpMessage += "╠❂➣ ║%i. " % num + key + "Cekpesan/off\n"
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Cpesan/off\n"
     num = (num+1)
-    helpMessage += "╠❂➣ ║%i. " % num + key + "Cekrespon\n"
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Crespon\n"
     num = (num+1)
-    helpMessage += "╠❂➣ ║%i. " % num + key + "Cekwelcome\n"
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Cwelcome\n"
     num = (num+1)
     helpMessage += "╠❂➣ ║%i. " % num + key + "Sticker「on/off\n"
     num = (num+1)
@@ -693,6 +670,7 @@ def help():
     helpMessage += "╠❂➣ ╠═════════⎆\n"
     helpMessage += "╠❂➣ ║     S̶̭̗̞̙̿͑̽̆̃̒į̷̙̝̦̤̜̗́̉ͅl̸̛͓͋͋͆̍ę̶͇̮̦̣̖̙̘̪̉n̸͍̦͉̖̟͚̗̣̍̓̽̅̚ť̴̙͋ ̷̨̳̠͎̮̘͇̀̅̀͒̈́͊̕͝T̸̡̯̗̩̺͉̑́͛̌̒ͅé̶̡̱̯̮̯̊̏́̀̃͜a̴̭͓̫͚̐́̂̍̂̊̋̚m̸̨̨̹͎͍̳̥͆̓͗̿͐͗͑̿̓͠ ̴̠͐̂B̷̛̳͎̫̻̫̯̣͓̲͋̀͋̋͊̈͗͑o̵̲̾̈́͒͗t̴̢͍̫̰̠̞͖͍̬̑̊̽͒́̈́͗ͅ \n"
     helpMessage += "╚═════════════╝\n" 
+    helpMessage += " Creator: https://line.me/ti/p/~teambotprotect \n"
     return helpMessage
 
 def helpbot():
@@ -700,6 +678,9 @@ def helpbot():
     key = Setmain["keyCommand"]
     key = key.title()
     helpMessage2 = "╔═════════════╗\n"
+    helpMessage2+= "║  🗂🗂🗂🗂🗂🗂🗂🗂🗂\n"
+    helpMessage2 += "╚═════════════╝\n" 
+    helpMessage2+= "╔═════════════╗\n"
     helpMessage2+= "║             S̶̭̗̞̙̿͑̽̆̃̒į̷̙̝̦̤̜̗́̉ͅl̸̛͓͋͋͆̍ę̶͇̮̦̣̖̙̘̪̉n̸͍̦͉̖̟͚̗̣̍̓̽̅̚ť̴̙͋ ̷̨̳̠͎̮̘͇̀̅̀͒̈́͊̕͝T̸̡̯̗̩̺͉̑́͛̌̒ͅé̶̡̱̯̮̯̊̏́̀̃͜a̴̭͓̫͚̐́̂̍̂̊̋̚m̸̨̨̹͎͍̳̥͆̓͗̿͐͗͑̿̓͠ ̴̠͐̂B̷̛̳͎̫̻̫̯̣͓̲͋̀͋̋͊̈͗͑o̵̲̾̈́͒͗t̴̢͍̫̰̠̞͖͍̬̑̊̽͒́̈́͗ͅ\n"
     helpMessage2 += "╠═════════════╝\n"
     helpMessage2 += "╠❂➣ ║%i. " % num + key + "Crot @\n"
@@ -787,6 +768,10 @@ def helpbot():
     helpMessage2 += "╠❂➣ ╠═════════⎆\n"
     helpMessage2 += "╠❂➣ ║     S̶̭̗̞̙̿͑̽̆̃̒į̷̙̝̦̤̜̗́̉ͅl̸̛͓͋͋͆̍ę̶͇̮̦̣̖̙̘̪̉n̸͍̦͉̖̟͚̗̣̍̓̽̅̚ť̴̙͋ ̷̨̳̠͎̮̘͇̀̅̀͒̈́͊̕͝T̸̡̯̗̩̺͉̑́͛̌̒ͅé̶̡̱̯̮̯̊̏́̀̃͜a̴̭͓̫͚̐́̂̍̂̊̋̚m̸̨̨̹͎͍̳̥͆̓͗̿͐͗͑̿̓͠ ̴̠͐̂B̷̛̳͎̫̻̫̯̣͓̲͋̀͋̋͊̈͗͑o̵̲̾̈́͒͗t̴̢͍̫̰̠̞͖͍̬̑̊̽͒́̈́͗ͅ \n"
     helpMessage2 += "╚═════════════╝\n" 
+    helpMessage2 += "╔═════════════╗\n"
+    helpMessage2+= "║  🗂🗂🗂🗂🗂🗂🗂🗂🗂🗂\n"
+    helpMessage2 += "╚═════════════╝\n" 
+    helpMessage2 += " My ID LINE : 〘 https://line.me/ti/p/~teambotprotect 〙\n"
     return helpMessage2
 
 def bot(op):
@@ -1266,6 +1251,7 @@ def bot(op):
                         Ticket = kc.reissueGroupTicket(op.param1)
                         cl.acceptGroupInvitationByTicket(op.param1,Ticket)
                         ki.acceptGroupInvitationByTicket(op.param1,Ticket)
+                        ka.acceptGroupInvitationByTicket(op.param1,Ticket)
                         ka.kickoutFromGroup(op.param1,[op.param2])
                         kc.kickoutFromGroup(op.param1,[op.param2])
                         G.preventedJoinByTicket = True
@@ -1421,8 +1407,30 @@ def bot(op):
                                         return sendMention(to, sender, "[ Auto Respond ]\n" + msg_[0], msg_[1])
                                     sendMention(receiver, sender, "[ Auto Respond ]\nOi", "{}".format(str(settings['mentionPesan'])))
                                 break  
+        if op.type == 55:
+            print ("[ 55 ] NOTIFIED READ MESSAGE")
+            try:
+                if op.param1 in read['readPoint']:
+                    if op.param2 in read['readMember'][op.param1]:
+                        pass
+                    else:
+                        read['readMember'][op.param1] += op.param2
+                    read['ROM'][op.param1][op.param2] = op.param2
+                else:
+                   pass
+            except Exception as error:
+                logError(error)
+                traceback.print_tb(error.__traceback__)
+    except Exception as error:
+        logError(error)
+        traceback.print_tb(error.__traceback__)
+#____________________________________________________________________            
+        if op.type == 55:
+            if op.param2 in wait["blacklist"]:
+                random.choice(ABC).kickoutFromGroup(op.param1,[op.param2])
+            else:
+                pass
 
-#____________________________________________________________________                
         if op.type == 55:
             try:
                 if op.param1 in Setmain["SKreadPoint"]:
@@ -1434,26 +1442,7 @@ def bot(op):
                    pass
             except:
                 pass
-
-        if op.type == 55:
-            if op.param2 in wait["blacklist"]:
-                if Bots in wait["blacklist"]:
-                    pass
-                elif staff in wait["blacklist"]:
-                    pass
-                elif admin in wait["blacklist"]:
-                    pass
-                elif owner in wait["blacklist"]:
-                    pass
-                elif Bots in wait["blacklist"]:
-                    pass
-                else:
-                    random.choice(ABC).kickoutFromGroup(op.param1,[op.param2])
-                    try:
-                        random.choice(ABC).kickoutFromGroup(op.param1,[op.param2])
-                    except:
-                        pass
-                        
+        
             if cctv['cyduk'][op.param1]==True:
                 if op.param1 in cctv['point']:
                     Name = cl.getContact(op.param2).displayName
@@ -1878,7 +1867,7 @@ def bot(op):
                         elif cmd == "about" or cmd == "informasi":
                           if wait["selfbot"] == True:
                             if msg._from in owner or msg._from in admin:
-                               sendMention(msg.to, sender, "●My Creator\n\n")
+                               sendMention(msg.to, sender, "🔴My Creator\n\n")
                                cl.sendMessage(msg.to, None, contentMetadata={'mid': mid}, contentType=13)
 
                         elif cmd == "me" or text.lower() == 'me':
@@ -1890,11 +1879,17 @@ def bot(op):
                                path = cl.getContact(msg.contentMetadata["mid"]).picturePath
                                image = 'http://dl.profile.line.naver.jp'+path
                                cl.sendImageWithURL(msg.to, image)
-                               cl.sendMessage(op.param1, None, contentMetadata={"STKID":"13162615","STKPKGID":"1326453","STKVER":"1"}, contentType=7)
-
-                        elif text.lower() == "mymid":
+             
+                        elif text.lower() == "midku":
                                cl.sendMessage(msg.to, msg._from)
-                               cl.sendMessage(op.param1, None, contentMetadata={"STKID":"13162615","STKPKGID":"1326453","STKVER":"1"}, contentType=7)
+                        elif text.lower() == 'ass':
+                               cl.sendMessage(msg.to, "Assalamu'alaikum Wr. Wb")
+                               cl.sendMessage(msg.to, "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ")
+                        elif text.lower() == 'wss':
+                               cl.sendMessage(msg.to, "Wa'alaikumsallam.Wr,Wb")
+                               cl.sendMessage(msg.to, "ُوَعَلَيْكُمْ السَّلاَمُ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ  ")
+                        elif text.lower() == 'bot':
+                               cl.sendMessage(msg.to, "On bos siap hajar😈")
 
                         elif ("Get id " in msg.text):
                           if wait["selfbot"] == True:
@@ -1955,9 +1950,9 @@ def bot(op):
                                    cl.removeAllMessages(op.param2)
                                    ki.removeAllMessages(op.param2)
                                    ka.removeAllMessages(op.param2)
-                                   cl.sendMessage(msg.to,"Bersih")
-                                   ki.sendMessage(msg.to,"Bersih")
-                                   ka.sendMessage(msg.to,"Bersih")
+                                   cl.sendMessage(msg.to,"Bersih bos")
+                                   ki.sendMessage(msg.to,"Bersih bos")
+                                   ka.sendMessage(msg.to,"Bersih bos")
                                except:
                                    pass
 
@@ -1968,12 +1963,12 @@ def bot(op):
                                pesan = text.replace(sep[0] + " ","")
                                saya = cl.getGroupIdsJoined()
                                for group in saya:
-                                   cl.sendMessage(group,"●Broadcast \n\n" + str(pesan))
+                                   cl.sendMessage(group,"🔴Broadcast \n\n" + str(pesan))
 
                         elif text.lower() == "sname":
                           if wait["selfbot"] == True:
                             if msg._from in owner or msg._from in admin:
-                               cl.sendMessage(msg.to, "● Sname \n\n" + str(Setmain["keyCommand"]) + " ")
+                               cl.sendMessage(msg.to, "🔴 Sname \n\n" + str(Setmain["keyCommand"]) + " ")
                                
                         elif cmd.startswith("setsname "):
                           if wait["selfbot"] == True:
@@ -1984,7 +1979,7 @@ def bot(op):
                                    cl.sendMessage(msg.to, "Succes change Sname")
                                else:
                                    Setmain["keyCommand"] = str(key).lower()
-                                   cl.sendMessage(msg.to, "● Sname change \n\nSname succes change to {}".format(str(key).lower()))
+                                   cl.sendMessage(msg.to, "🔴Sname change \n\nSname succes change to {}".format(str(key).lower()))
 
                         elif text.lower() == "reset sname":
                           if wait["selfbot"] == True:
@@ -2109,7 +2104,7 @@ def bot(op):
                                    a = a + 1
                                    end = "\n"
                                    ma += "" + str(a) + ". " +G.displayName+ "\n"
-                               cl.sendMessage(msg.to,"●FRIEND LIST\n\n"+ma+"\nTotal"+str(len(gid))+"Friends")
+                               cl.sendMessage(msg.to,"🔴FRIEND LIST\n\n"+ma+"\nTotal"+str(len(gid))+"Friends")
 
                         elif cmd == "glist":
                           if wait["selfbot"] == True:
@@ -2122,7 +2117,7 @@ def bot(op):
                                    a = a + 1
                                    end = "\n"
                                    ma += "" + str(a) + ". " +G.name+ "\n"
-                               cl.sendMessage(msg.to,"●GROUP LIST\n\n"+ma+"\nTotal"+str(len(gid))+" Groups")
+                               cl.sendMessage(msg.to,"🔴GROUP LIST\n\n"+ma+"\nTotal"+str(len(gid))+" Groups")
 
                         elif cmd == "curl":
                           if wait["selfbot"] == True:
@@ -2245,7 +2240,7 @@ def bot(op):
                                     a = a + 1
                                     end = '\n'
                                     ma += str(a) + ". " +cl.getContact(m_id).displayName + "\n"
-                                cl.sendMessage(msg.to,"●Botlist●\n\n\n"+ma+"\n%s Bots" %(str(len(Bots))))
+                                cl.sendMessage(msg.to,"🔴Botlist🔴\n\n\n"+ma+"\n%s Bots" %(str(len(Bots))))
 
                         elif cmd == "silent":
                           if wait["selfbot"] == True:
@@ -2253,7 +2248,7 @@ def bot(op):
                                 try:
                                     ginfo = cl.getGroup(msg.to)
                                     cl.inviteIntoGroup(msg.to, [Cmid])
-                                    cl.sendMessage(msg.to,"Done 😚😚 "+str(ginfo.name)+" siap backup")
+                                    cl.sendMessage(msg.to,"Redy stay "+str(ginfo.name)+" Siap Backup")
                                 except:
                                     pass
 
@@ -2278,7 +2273,7 @@ def bot(op):
                                     c = c + 1
                                     end = '\n'
                                     mc += str(c) + ". " +cl.getContact(m_id).displayName + "\n"
-                                cl.sendMessage(msg.to,"●Adminlist●\n\n●Owner\n"+ma+"\n●Admin\n"+mb+"\n●Staff:\n"+mc+"\n%s Adminlist" %(str(len(owner)+len(admin)+len(staff))))
+                                cl.sendMessage(msg.to,"🔴Adminlist🔴\n\n🔴Owner\n"+ma+"\n🔴Admin\n"+mb+"\n🔴Staff:\n"+mc+"\n%s Adminlist" %(str(len(owner)+len(admin)+len(staff))))
 
                         elif cmd == "protectlist":
                           if wait["selfbot"] == True:
@@ -2287,11 +2282,13 @@ def bot(op):
                                 mb = ""
                                 mc = ""
                                 md = ""
-                                mf= ""
+                                mg = ""
+                                mf = ""
                                 a = 0
                                 b = 0
                                 c = 0
                                 d = 0
+                                g = 0
                                 f = 0
                                 gid = protect["pqr"]
                                 for group in gid:
@@ -2315,15 +2312,22 @@ def bot(op):
                                     mc += str(c) + ". " +cl.getGroup(group).name + "\n"
                                 gid = protect["pinv"]
                                 for group in gid:
-                               	    f = f + 1
+                                    f = f + 1
                                     end = '\n'
                                     mf += str(f) + ". " +cl.getGroup(group).name + "\n"
-                                cl.sendMessage(msg.to,"Settings Protection\n\n\nDenyurl :\n"+ma+"\nProall:\n"+mb+"\nProtect:\n"+md+"\nProtect Cancel:\n"+mc+"\nDenyinvite:\n"+mf+"\nProtectlist %s Grup protect" %(str(len(protect["pqr"])+len(protect["protect"])+len(protect["proall"])+len(protectcancel)+len(protect["pinv"]))))
+                                gid = protect["antijs"]
+                                for group in gid:
+                                    g = g + 1
+                                    end = '\n'
+                                    mg += str(g) + ". " +cl.getGroup(group).name + "\n"
+                                cl.sendMessage(msg.to,"Settings Protection\n\nProurl :\n"+ma+"\nProall:\n"+mb+"\nProtect:\n"+mf+"\nProtect Cancel:\n"+mc+"\nProinvite:\n"+md+"\nProtectJS:\n"+mg+"\nProtectlist %s Grup protect" %(str(len(protect["pqr"])+len(protect["protect"])+len(protect["antijs"])+len(protect["proall"])+len(protectcancel)+len(protect["pinv"]))))
 
                         elif cmd == "skname":
                           if wait["selfbot"] == True:
                             if msg._from in owner or msg._from in admin or msg._from in staff:
                                 cl.sendMessage(msg.to,responsename)
+                                ki.sendMessage(msg.to,responsename)
+                                ka.sendMessage(msg.to,responsename)
                                 
                         elif cmd == "masuk":
                          if msg._from in admin:
@@ -3133,12 +3137,12 @@ def bot(op):
                                          msgs = "Welcome Msg sudah tidak aktif"
                                     cl.sendMessage(msg.to, "「Dinonaktifkan」\n" + msgs)
 
-                        elif 'skurl ' in msg.text:
+                        elif 'Skurl ' in msg.text:
                            if msg._from in owner or msg._from in admin:
                               spl = msg.text.replace('Skurl ','')
                               if spl == 'on':
                                   if msg.to in protect["pqr"]:
-                                       msgs = "Denyurl has been active"
+                                       msgs = "SKurl has been active"
                                   else:
                                        protect["pqr"].append(msg.to)
                                        ginfo = cl.getGroup(msg.to)
@@ -3681,7 +3685,7 @@ def bot(op):
                                 wait["dblacklist"] = False
                                 wait["Talkwblacklist"] = False
                                 wait["Talkdblacklist"] = False
-                                cl.sendMessage(msg.to,"All refresh")
+                                cl.sendMessage(msg.to,"Kembali ke pengaturan awal😝😝😝")
 
                         elif cmd == "admin" or text.lower() == 'contact admin':
                             if msg._from in owner or msg._from in admin or msg._from in staff:
@@ -3934,6 +3938,8 @@ def bot(op):
                               ragets = cl.getContacts(wait["blacklist"])
                               mc = "%i" % len(ragets)
                               cl.sendMessage(msg.to,"Succes clearall " +mc)
+                        elif text.lower() == 'dz':
+                               cl.sendMessage(msg.to, "cie pake sc nya dhenza ya")
 #===========COMMAND SET============#
                         elif 'Spesan: ' in msg.text:
                            if msg._from in admin:
@@ -4029,5 +4035,5 @@ while True:
                 bot(op)
                 # Don't remove this line, if you wan't get error soon!
                 oepoll.setRevision(op.revision)
-    except Exception as e:
-        print(e)
+    except Exception as error:
+        logError(error)
