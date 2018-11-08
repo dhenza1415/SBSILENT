@@ -33,7 +33,7 @@ ls<br>
 python3 dhenza.py<br> 
 
 
-Supor by: TBP [TEAM BOT PROTECT]<br> 
+Suport by: TBP [TEAM BOT PROTECT]<br> 
                 BEBEK BOT TEAM & JUNSAN JUNIOR <br> 
           
 Note : Jika ingin instal pke vps tinggal tambah sudo di depan command<br> 
