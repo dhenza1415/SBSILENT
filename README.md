@@ -1,5 +1,12 @@
-#SBSILENT
-Cara install <br>
+# SELFBOT ONLY <br>
+# SELFBOT 2asist 1 ajs <br>
+# BOT KICKER <br>
+
+# GUNAKAN DENGAN BIJAK <br>
+# SEKEDAR BERBAGI ILMU BIAR BISA BERKEMBANG KETIKA LO SUDH DI ATAS JANGAN PERNAH SOMBONG DENGAN KARYA LO KARNA DULU LO BKAN APA APA <br>
+
+
+# Cara install <br>
 
 apt-get update -y <br>
 pkg install python -y <br>
