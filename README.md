@@ -33,6 +33,6 @@ Note : Jika ingin instal pke vps tinggal tambah sudo di depan command
 
 
  # Creator By TBP 
-- Add My ID LINE : 〘 https://line.me/ti/p/dhenz415 〙
-                   〘 https://line.me/ti/p/teambotprotect 〙
+- Add My ID LINE : 〘 https://line.me/ti/p/~dhenz415 〙
+                   〘 https://line.me/ti/p/~teambotprotect 〙
 
