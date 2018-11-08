@@ -3315,7 +3315,22 @@ def bot(op):
                                          msgs = "Allpro has been deactive\nDi Group : " +str(ginfo.name)
                                     cl.sendMessage(msg.to, "Nonactive\n" + msgs)
 
-#===========KICKOUT============#                     
+#===========KICKOUT============#       
+                        elif ("Crot " in msg.text):
+                          if wait["selfbot"] == True:
+                            if msg._from in admin:
+                               key = eval(msg.contentMetadata["MENTION"])
+                               key["MENTIONEES"][0]["M"]
+                               targets = []
+                               for x in key["MENTIONEES"]:
+                                    targets.append(x["M"])
+                               for target in targets:
+                                   if target not in Bots:
+                                       try:
+                                           random.choice(ABC).kickoutFromGroup(msg.to, [target])
+                                       except:
+                                           pass
+                                           
                         elif ("Vc " in msg.text):
                           if wait["selfbot"] == True:
                             if msg._from in admin:
