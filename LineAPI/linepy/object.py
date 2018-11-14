@@ -198,6 +198,48 @@ class Object(object):
                 return r.raw
         else:
             raise Exception('Download object failure.')
+            
+    @loggedIn
+    def generateReplyMessage(self, relatedMessageId):
+        msg = Message()
+        msg.relatedMessageServiceCode = 1
+        msg.messageRelationType = 3
+        msg.relatedMessageId = str(relatedMessageId)
+        return msg
+    
+    @loggedIn
+    def sendReply(self, relatedMessageId, to, text, contentMetadata={}, contentType=0):
+        msg = self.generateReplyMessage(relatedMessageId)
+        msg.to = to
+        msg.text = text
+        msg.contentType = contentType
+        msg.contentMetadata = contentMetadata
+        if to not in self._messageReq:
+            self._messageReq[to] = -1
+        self._messageReq[to] += 1
+        return self.talk.sendMessage(self._messageReq[to], msg)
+            
+    @loggedIn
+    def sendImageWithURL(self, to, url):
+        path = self.downloadFileURL(url, 'path')
+        return self.sendImage(to, path)
+
+    @loggedIn
+    def sendFooter(self, to, text, link, icon, footer):
+        contentMetadata = {'AGENT_LINK': link, 'AGENT_ICON': icon, 'AGENT_NAME': footer}
+        return self.sendMessage(to, text, contentMetadata) 
+        
+    @loggedIn    
+    def nadyacantikimut(self, path, path2):
+        try:
+            files = {'file': open(path, 'rb')}
+            data = {'params':self.genOBSParams({'oid': self.profile.mid,'ver': '2.0','type':'video','cat': 'vp.mp4'})}
+            r_vp = self.server.postContent(self.server.LINE_OBS_DOMAIN + '/talk/vp/upload.nhn',data=data, files=files)
+            if r_vp.status_code != 201:
+                raise Exception('update profile video picture failure.')
+            self.updateProfilePicture(path2, 'vp')
+        except Exception as e:
+            print(str(e))
 
     @loggedIn
     def forwardObjectMsg(self, to, msgId, contentType='image'):
