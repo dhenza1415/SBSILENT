@@ -122,6 +122,8 @@ settings = {
     "groupPicture":False,
     "changePicture":False,
     "changeProfileVideo": False,
+    "ChangeVideoProfilevid":{},
+    "ChangeVideoProfilePicture":{},
     "autoJoinTicket":False,
     "userAgent": [
         "Mozilla/5.0 (X11; U; Linux i586; de; rv:5.0) Gecko/20100101 Firefox/5.0",
@@ -632,6 +634,10 @@ def help():
     helpMessage += "╠❂➣ ║%i. " % num + key + "Addimg •nama•\n"
     num = (num+1)
     helpMessage += "╠❂➣ ║%i. " % num + key + "Dellimg •nama•\n"
+    num = (num+1)
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Changedual \n"
+    num = (num+1)
+    helpMessage += "╠❂➣ ║%i. " % num + key + "Changedualurl: •URL•\n"
     num = (num+1)
     helpMessage += "╠❂➣ ║%i. " % num + key + "Listimg •nama•\n"
     num = (num+1)
@@ -1587,6 +1593,22 @@ def bot(op):
                          settings["AddstickerTag"]["spkg"] = msg.contentMetadata["STKPKGID"]
                          cl.sendMessage(msg.to, "Sticker respon hasben changed")
                          settings["AddstickerTag"]["status"] = False
+               if msg.contentType == 2:
+                   if msg._from in admin:
+                       if msg._from in settings["ChangeVideoProfilevid"]:
+                            settings["ChangeVideoProfilePicture"][msg._from] = True
+                            del settings["ChangeVideoProfilevid"][msg._from]
+                            cl.downloadObjectMsg(msg_id,'path','video.mp4')
+                            cl.sendMessage(msg.to,"Send gambarnya...")
+                            
+               if msg.contentType == 1:
+                   if msg._from in admin:
+                       if msg._from in settings["ChangeVideoProfilePicture"]:
+                            del settings["ChangeVideoProfilePicture"][msg._from]
+                            cl.downloadObjectMsg(msg_id,'path','image.jpg')
+                            cl.nadyacantikimut('video.mp4','image.jpg')
+                            cl.sendMessage(msg.to,"Change Video Profile Success!!!")          
+               
                if msg.contentType == 1:
                   if msg._from in mid:
                      if settings["Addimage"]["status"] == True:
@@ -2498,6 +2520,20 @@ def bot(op):
                                   cl.sendMessage(msg.to, "Sudak tidak aktif")
 
 #===========add img============#
+                        elif cmd == "changedual":
+                          if wait["selfbot"] == True:
+                            if msg._from in admin:
+                                settings["ChangeVideoProfilevid"][msg._from] = True
+                                cl.sendMessage(msg.to,"Send Videonya...")
+                                
+                        elif cmd.startswith("changedualurl: "):
+                            if msg._from in admin:
+                                sep = msg.text.split(" ")
+                                url = msg.text.replace(sep[0] + " ","")                            
+                                cl.downloadFileURL(url,'path','video.mp4')
+                                settings["ChangeVideoProfilePicture"][msg._from] = True
+                                cl.sendMessage(msg.to, "Send Gambarnya.....")
+                                
                         elif cmd.startswith("addimg"):
                                 sep = text.split(" ")
                                 name = text.replace(sep[0] + " ","")
