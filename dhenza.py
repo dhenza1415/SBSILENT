@@ -1406,24 +1406,7 @@ def bot(op):
                                         msg_ = settings["mentionPesan"].split("@!")
                                         return sendMention(to, sender, "[ Auto Respond ]\n" + msg_[0], msg_[1])
                                     sendMention(receiver, sender, "[ Auto Respond ]\nOi", "{}".format(str(settings['mentionPesan'])))
-                                break  
-        if op.type == 55:
-            print ("[ 55 ] NOTIFIED READ MESSAGE")
-            try:
-                if op.param1 in read['readPoint']:
-                    if op.param2 in read['readMember'][op.param1]:
-                        pass
-                    else:
-                        read['readMember'][op.param1] += op.param2
-                    read['ROM'][op.param1][op.param2] = op.param2
-                else:
-                   pass
-            except Exception as error:
-                logError(error)
-                traceback.print_tb(error.__traceback__)
-    except Exception as error:
-        logError(error)
-        traceback.print_tb(error.__traceback__)
+                                break     
 #____________________________________________________________________            
         if op.type == 55:
             if op.param2 in wait["blacklist"]:
@@ -4035,5 +4018,5 @@ while True:
                 bot(op)
                 # Don't remove this line, if you wan't get error soon!
                 oepoll.setRevision(op.revision)
-    except Exception as error:
-        logError(error)
+    except Exception as e:
+        logError(e)
