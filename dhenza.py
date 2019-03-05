@@ -37,7 +37,7 @@ else:
      try:
          ki = LINE(pin['token2'])
      except:
-         pin['token'] = ""
+         pin['token2'] = ""
          with open('token4.json', 'w') as fp:
              json.dump(pin, fp, sort_keys=True, indent=4)
          ki = LINE()
