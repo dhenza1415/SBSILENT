@@ -10,76 +10,31 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, multiprocessing, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib, urllib3, urllib.parse, html5lib, wikipedia, atexit, timeit, pafy, youtube_dl, traceback
 from gtts import gTTS
 from googletrans import Translator
-#==========================================================================================================
-#AKUN SELFBOT+ASIST #UPDATE 14 FEBRUARY 2019 SELFBOT #SPESIAL SUPORT ALL TEAM BOTS. #CREATOR: @teambotprotect
-#==========================================================================================================
-with open('token4.json', 'r') as bolo:
-     pin = json.load(bolo)
+#==============================================================================================================================
+#AKUN SELFBOT+ASIST #UPDATE 14 FEBRUARY 2019 SELFBOT #SPESIAL SUPORT ALL TEAM BOTS. #CREATOR: @teambotprotect #UPDATE AJS GHOST +AUTOLIKE
+#==============================================================================================================================
+cl = LINE("")
+cl.log("Auth Token : " + str(cl.authToken))
+cl.log("Timeline Token : " + str(cl.tl.channelAccessToken))
 
-if pin['token'] == "":
-    cl = LINE()
-else:
-     try:
-         cl = LINE(pin['token'])
-     except:
-         pin['token'] = ""
-         with open('token4.json', 'w') as fp:
-             json.dump(pin, fp, sort_keys=True, indent=4)
-         cl = LINE()
-pin['token'] = cl.authToken
-with open('token4.json', 'w') as fp:
-    json.dump(pin, fp, sort_keys=True, indent=4)
-    
+ki = LINE("")
+ki.log("Auth Token : " + str(ki.authToken))
+ki.log("Timeline Token : " + str(ki.tl.channelAccessToken))
 
-if pin['token2'] == "":
-    ki = LINE()
-else:
-     try:
-         ki = LINE(pin['token2'])
-     except:
-         pin['token2'] = ""
-         with open('token4.json', 'w') as fp:
-             json.dump(pin, fp, sort_keys=True, indent=4)
-         ki = LINE()
-pin['token2'] = cl.authToken
-with open('token4.json', 'w') as fp:
-    json.dump(pin, fp, sort_keys=True, indent=4)
-    
-    
-if pin['token3'] == "":
-    ka = LINE()
-else:
-     try:
-         ka = LINE(pin['token3'])
-     except:
-         pin['token3'] = ""
-         with open('token4.json', 'w') as fp:
-             json.dump(pin, fp, sort_keys=True, indent=4)
-         ka = LINE()
-pin['token3'] = cl.authToken
-with open('token4.json', 'w') as fp:
-    json.dump(pin, fp, sort_keys=True, indent=4)
-    
-if pin['token4'] == "":
-    kc = LINE()
-else:
-     try:
-         kc = LINE(pin['token4'])
-     except:
-         pin['token4'] = ""
-         with open('token4.json', 'w') as fp:
-             json.dump(pin, fp, sort_keys=True, indent=4)
-         kc = LINE()
-pin['token4'] = cl.authToken
-with open('token4.json', 'w') as fp:
-    json.dump(pin, fp, sort_keys=True, indent=4)
+ka = LINE("")
+ka.log("Auth Token : " + str(ka.authToken))
+ka.log("Timeline Token : " + str(ka.tl.channelAccessToken))
+
+kc = LINE("")
+kc.log("Auth Token : " + str(kc.authToken))
+kc.log("Timeline Token : " + str(kc.tl.channelAccessToken))
 #==========================================================================================================   
 oepoll = OEPoll(cl)
 call = cl
-creator = ["ub1c5a71f27b863896e9d44bea857d35b"]
-owner = ["ub1c5a71f27b863896e9d44bea857d35b"]
-admin = ["ub1c5a71f27b863896e9d44bea857d35b"]
-staff = ["ub1c5a71f27b863896e9d44bea857d35b"]
+creator = ["ub1c5a71f27b863896e9d44bea857d35b"] #MID CREATOR JANGAN DI UBAH
+owner = ["ub1c5a71f27b863896e9d44bea857d35b"] #MID LOE
+admin = ["ub1c5a71f27b863896e9d44bea857d35b"] #MID LOE
+staff = ["ub1c5a71f27b863896e9d44bea857d35b"] #MID LOE
 mid = cl.getProfile().mid
 Amid = ki.getProfile().mid
 Bmid = ka.getProfile().mid
@@ -1683,56 +1638,31 @@ def bot(op):
             except Exception as e:
                 logError(e)
                 
-        if op.type == 25 or op.type == 26:
+        if op.type == 26:           
             msg = op.message
             text = msg.text
             msg_id = msg.id
             receiver = msg.to
             sender = msg._from
-            if msg.toType == 2:
+            if msg.toType == 0 or msg.toType == 2:
                if msg.toType == 0:
-                    to = msg._from
+                    to = receiver
                elif msg.toType == 2:
-                    to = msg.to
+                    to = receiver
+               if msg.contentType == 7:
+                 if wait["sticker"] == True:
+                    msg.contentType = 0
+                    cl.sendMessage(msg.to,"STKID : " + msg.contentMetadata["STKID"] + "\nSTKPKGID : " + msg.contentMetadata["STKPKGID"] + "\nSTKVER : " + msg.contentMetadata["STKVER"]+ "\n\n「Link Sticker」" + "\nline://shop/detail/" + msg.contentMetadata["STKPKGID"])
                if msg.contentType == 16:
-                    if wait["Timeline"] == True:
-                            ret_ = "「 ᴅᴇᴛᴀɪʟ ᴘᴏsᴛɪɴɢᴀɴ 」"
-                            if msg.contentMetadata["serviceType"] == "GB":
-                                contact = cl.getContact(sender)
-                                auth = "\n• ˢᵏℹ༓ᴘᴇɴᴜʟɪs : {}".format(str(contact.displayName))
-                            else:
-                                auth = "\n• ˢᵏℹ ༓ᴘᴇɴᴜʟɪs : {}".format(str(msg.contentMetadata["serviceName"]))
-                            ret_ += auth
-                            if "stickerId" in msg.contentMetadata:
-                                stck = "\n• ˢᵏℹ༓sᴛɪᴄᴋᴇʀ : https://line.me/R/shop/detail/{}".format(str(msg.contentMetadata["packageId"]))
-                                ret_ += stck
-                            if "mediaOid" in msg.contentMetadata:
-                                object_ = msg.contentMetadata["mediaOid"].replace("svc=myhome|sid=h|","")
-                                if msg.contentMetadata["mediaType"] == "V":
-                                    if msg.contentMetadata["serviceType"] == "GB":
-                                        ourl = "\n• ˢᵏℹ༓ Objek URL : https://obs-us.line-apps.com/myhome/h/download.nhn?tid=612w&{}".format(str(msg.contentMetadata["mediaOid"]))
-                                        murl = "\n• ˢᵏℹ༓Media URL : https://obs-us.line-apps.com/myhome/h/download.nhn?{}".format(str(msg.contentMetadata["mediaOid"]))
-                                    else:
-                                        ourl = "\n• ˢᵏℹ༓Objek URL : https://obs-us.line-apps.com/myhome/h/download.nhn?tid=612w&{}".format(str(object_))
-                                        murl = "\n• ˢᵏℹ༓Media URL : https://obs-us.line-apps.com/myhome/h/download.nhn?{}".format(str(object_))
-                                    ret_ += murl
-                                else:
-                                    if msg.contentMetadata["serviceType"] == "GB":
-                                        ourl = "\n• ˢᵏℹ༓Objek URL : https://obs-us.line-apps.com/myhome/h/download.nhn?tid=612w&{}".format(str(msg.contentMetadata["mediaOid"]))
-                                    else:
-                                        ourl = "\n• ˢᵏℹ༓Objek URL : https://obs-us.line-apps.com/myhome/h/download.nhn?tid=612w&{}".format(str(object_))
-                                ret_ += ourl
-                            if "text" in msg.contentMetadata:
-                                text = "\n• ˢᵏℹ༓Tulisan : {}".format(str(msg.contentMetadata["text"]))
-                                purl = "\n• ˢᵏℹ༓Post URL : {}".format(str(msg.contentMetadata["postEndUrl"]).replace("line://","https://line.me/R/"))
-                                ret_ += purl
-                                ret_ += text
-                                url = msg.contentMetadata['postEndUrl']
-                            cl.sendMessage(to, str(ret_))
-                            cl.likePost(url[25:58], url[66:], likeType=1005)
-                            cl.createComment(url[25:58], url[66:], wait["comment"])
-                            cl.sendMessage(to,'Like Success By: Dhenza')           
-                
+                  if msg.toType in (2,1,0):
+                     try:
+                         mat = msg.contentMetadata["postEndUrl"].split('userMid=')[1].split('&postId=')
+                         cl.likePost(mat[0], mat[1], 1003)
+                         cl.createComment(mat[0], mat[1], "ᴀᴜᴛᴏʟɪᴋᴇ ʙʏ: \n\n\n\n™S̶̭̗̞̙̿͑̽̆̃̒į̷̙̝̦̤̜̗́̉ͅl̸̛͓͋͋͆̍ę̶͇̮̦̣̖̙̘̪̉n̸͍̦͉̖̟͚̗̣̍̓̽̅̚ť̴̙͋ ̷̨̳̠͎̮̘͇̀̅̀͒̈́͊̕͝T̸̡̯̗̩̺͉̑́͛̌̒ͅé̶̡̱̯̮̯̊̏́̀̃͜a̴̭͓̫͚̐́̂̍̂̊̋̚m̸̨̨̹͎͍̳̥͆̓͗̿͐͗͑̿̓͠ ̴̠͐̂B̷̛̳͎̫̻̫̯̣͓̲͋̀͋̋͊̈͗͑o̵̲̾̈́͒͗t̴̢͍̫̰̠̞͖͍̬̑̊̽͒́̈́͗ͅ\n\n\n\nᴄʀᴇᴀᴛᴏʀ:\nhttp://line.me/ti/p/~teambotprotect\nɢɪᴛhᴜʙ:\ngithub.com/dhenza1415\nchanel ʏᴏᴜᴛᴜʙᴇ:\nhttps://youtu.be/CRqXKcTl6IY\n\nnew ᴄʜᴀɴᴇʟ:\nhttps://youtu.be/6UGH_4gG9qk")
+                         cl.sendMessage(msg.id, to, "➥[TEAM BOT PROTECT LIKE]\nSucsess..👍\nCek Timeline👌\n\nᴄʀᴇᴀᴛᴏʀ:\nhttp://line.me/ti/p/~teambotprotect\nɢɪᴛhᴜʙ:\ngithub.com/dhenza1415\nchanel ʏᴏᴜᴛᴜʙᴇ:\nhttps://youtu.be/CRqXKcTl6IY\n\nnew ᴄʜᴀɴᴇʟ:\nhttps://youtu.be/6UGH_4gG9qk")
+                     except Exception as e:
+                         cl.sendMessage(msg.to, str(e))   
+                                 
                if msg.contentType == 0:
                     msg_dict[msg.id] = {"text":msg.text,"from":msg._from,"createdTime":msg.createdTime}
                if msg.contentType == 1:
