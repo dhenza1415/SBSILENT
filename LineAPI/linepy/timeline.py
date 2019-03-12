@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime
 from .channel import Channel
 
@@ -15,7 +14,9 @@ def loggedIn(func):
 class Timeline(Channel):
 
     def __init__(self):
-        Channel.__init__(self, self.channel, self.server.CHANNEL_ID['LINE_TIMELINE'], False)
+        if not self.channelId:
+            self.channelId = self.server.CHANNEL_ID['LINE_TIMELINE']
+        Channel.__init__(self, self.channel, self.channelId, False)
         self.tl = self.getChannelResult()
         self.__loginTimeline()
         
@@ -33,7 +34,7 @@ class Timeline(Channel):
     """Timeline"""
 
     @loggedIn
-    def getFeed(self, postLimit=10, commentLimit=1, likeLimit=1, order='TIME'):
+    def getFeed(self, postLimit=999999, commentLimit=1, likeLimit=1, order='TIME'):
         params = {'postLimit': postLimit, 'commentLimit': commentLimit, 'likeLimit': likeLimit, 'order': order}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/feed/list.json', params)
         r = self.server.getContent(url, headers=self.server.timelineHeaders)
@@ -98,7 +99,7 @@ class Timeline(Channel):
             mid = self.profile.mid
         params = {'receiveMid': mid, 'postId': postId}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/post/sendPostToTalk.json', params)
-        r = self.server.getContent(url, data=data, headers=self.server.timelineHeaders)
+        r = self.server.getContent(url, headers=self.server.timelineHeaders)
         return r.json()
 
     @loggedIn
@@ -108,6 +109,7 @@ class Timeline(Channel):
         params = {'homeId': mid, 'sourceType': 'TIMELINE'}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/comment/create.json', params)
         data = {'commentText': text, 'activityExternalId': postId, 'actorId': mid}
+        data = json.dumps(data)
         r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
         return r.json()
 
@@ -118,6 +120,7 @@ class Timeline(Channel):
         params = {'homeId': mid, 'sourceType': 'TIMELINE'}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/comment/delete.json', params)
         data = {'commentId': commentId, 'activityExternalId': postId, 'actorId': mid}
+        data = json.dumps(data)
         r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
         return r.json()
 
@@ -130,6 +133,7 @@ class Timeline(Channel):
         params = {'homeId': mid, 'sourceType': 'TIMELINE'}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/like/create.json', params)
         data = {'likeType': likeType, 'activityExternalId': postId, 'actorId': mid}
+        data = json.dumps(data)
         r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
         return r.json()
 
@@ -140,11 +144,33 @@ class Timeline(Channel):
         params = {'homeId': mid, 'sourceType': 'TIMELINE'}
         url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/like/cancel.json', params)
         data = {'activityExternalId': postId, 'actorId': mid}
+        data = json.dumps(data)
         r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
         return r.json()
 
     """Group Post"""
+    @loggedIn
+    def createPostGroup(self, text,to, holdingTime=None,textMeta=[]):
+        params = {'homeId': to, 'sourceType': 'GROUPHOME'}
+        url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/post/create.json', params)
+        payload = {'postInfo': {'readPermission': {'type': 'ALL'}}, 'sourceType': 'GROUPHOME', 'contents': {'text': text,'textMeta':textMeta}}
+        if holdingTime != None:
+            payload["postInfo"]["holdingTime"] = holdingTime
+        data = json.dumps(payload)
+        r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
+        return r.json()
 
+    @loggedIn
+    def createPostGroupR(self, text,to):
+        params = {'homeId': to, 'sourceType': 'GROUPHOME'}
+        url = self.server.urlEncode(self.server.LINE_TIMELINE_API, '/v39/relay/create.json', params)
+        payload = {'postInfo': {'readPermission': {'type': 'ALL'}}, 'sourceType': 'GROUPHOME', 'contents': {'text': text,'textMeta':textMeta}}
+        if holdingTime != None:
+            payload["postInfo"]["holdingTime"] = holdingTime
+        data = json.dumps(payload)
+        r = self.server.postContent(url, data=data, headers=self.server.timelineHeaders)
+        return r.json()
+    
     @loggedIn
     def createGroupPost(self, mid, text):
         payload = {'postInfo': {'readPermission': {'homeId': mid}}, 'sourceType': 'TIMELINE', 'contents': {'text': text}}
